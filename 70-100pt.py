@@ -9,8 +9,8 @@
 from Tkinter import *
 root = Tk()
 drawpad = Canvas(root, width=800,height=600, background='white')
-background = drawpad.create_rectangle(0,0,800,400, fill="black")
-rocket1 = drawpad.create_rectangle(400,585,405,590, fill="white", outline="blue")
+background = drawpad.create_rectangle(0,0,800,400, fill="maroon")
+rocket1 = drawpad.create_rectangle(400,585,405,590, fill="white", outline="#123456")
 player = drawpad.create_oval(390,580,410,600, fill="blue")
 enemy = drawpad.create_rectangle(50,50,100,60, fill="red")
 rocket1Fired = False
@@ -34,11 +34,8 @@ class myApp(object):
         self.label1 = Label(root, text=self.prompt, width=len(self.prompt), bg='green')
         self.label1.pack()
 
-        looseRocket = self.shotRocket(rocket1)
         self.rockets = 3
-        if looseRocket == True:
-            self.rockets = self.rockets - 1
-        self.rockets
+        
         self.rocketsTxt = Label(root, text=str(self.rockets), width=len(str(self.rockets)), bg='green')
         self.rocketsTxt.pack()
         
@@ -86,6 +83,8 @@ class myApp(object):
         px1,py1,px2,py2 = drawpad.coords(player)
         if event.char == " ":
             rocket1Fired = True
+            self.rockets = self.rockets - 1
+            self.rocketsTxt.configure(text=self.rockets)
         if event.char == "w":        #Up Key
             drawpad.move(player,0,-4)
             drawpad.move(rocket1,0,-4)
@@ -121,13 +120,6 @@ class myApp(object):
             return True
         else:
             return False
-            
-    def shotRocket(self, rocket1):
-        global drawpad
-        global rocket1Fired
-        if rocket1Fired == True:
-            return True
-            self.rockets = self.rockets - 1
 
 app = myApp(root)
 root.mainloop()
